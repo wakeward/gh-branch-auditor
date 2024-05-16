@@ -11,7 +11,6 @@ import (
 var debug bool
 var token string
 var owner string
-var outputLocation string
 
 var rootCmd = &cobra.Command{
 	Use:   "gh-branch-auditor",
@@ -57,5 +56,4 @@ func init() {
 	rootCmd.PersistentFlags().BoolVar(&debug, "debug", false, "turn on debug logs")
 	rootCmd.PersistentFlags().StringVarP(&token, "token", "t", "", "Set GitHub token")
 	rootCmd.PersistentFlags().StringVarP(&owner, "owner", "o", "", "Set GitHub repository owner")
-	rootCmd.PersistentFlags().StringVarP(&outputLocation, "output", "l", "", "Set output location")
 }
