@@ -15,9 +15,9 @@ var owner string
 var repo string
 
 var rootCmd = &cobra.Command{
-	Use:   "gh-ba",
+	Use:   "gh-branch-auditor",
 	Short: "A tool to audit GitHub Branch Protection Rules",
-	Long:  `gh-ba is a tool to audit GitHub Branch Protection Rules.`,
+	Long:  `gh-branch-auditor is a tool to audit GitHub Branch Protection Rules.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		if repo != "" {

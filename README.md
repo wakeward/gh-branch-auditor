@@ -12,7 +12,7 @@ A tool for analysing GitHub Branch Protection settings on repositories
 
 ```bash
 Usage:
-  gh-ba [flags]
+  gh-branch-auditor [flags]
 
 Flags:
       --debug          turn on debug logs
@@ -27,13 +27,13 @@ Flags:
 Analyse all repositories for an owner
 
 ```bash
-$ gh-ba -t <GITHUB_TOKEN> -o <OWNER>
+$ gh-branch-auditor -t <GITHUB_TOKEN> -o <OWNER>
 ```
 
 Analyse a specific repository for an owner
 
 ```bash
-$ gh-ba -t <GITHUB_TOKEN> -o <OWNER> -r <REPOSITORY>
+$ gh-branch-auditor -t <GITHUB_TOKEN> -o <OWNER> -r <REPOSITORY>
 ```
 
 ## To Do
