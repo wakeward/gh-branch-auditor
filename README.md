@@ -12,11 +12,11 @@ A tool for analysing GitHub Branch Protection settings on repositories
 
 ```bash
 Usage:
-  gh-branch-auditor [flags]
+  gh-ba [flags]
 
 Flags:
       --debug          turn on debug logs
-  -h, --help           help for gh-branch-auditor
+  -h, --help           help for gh-ba
   -o, --owner string   Set GitHub repository owner
   -r, --repo string    Set GitHub repository name
   -t, --token string   Set GitHub token
@@ -38,6 +38,6 @@ $ gh-ba -t <GITHUB_TOKEN> -o <OWNER> -r <REPOSITORY>
 
 ## To Do
 
-[ ] - Define Rulesets
-[ ] - Support other branches than default
-[ ] - Create a GH-CLI extension for this
+* [ ] - Define Rulesets
+* [ ] - Support other branches than default
+* [ ] - Create a GH-CLI extension for this

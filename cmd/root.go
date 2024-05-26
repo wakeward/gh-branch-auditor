@@ -15,9 +15,9 @@ var owner string
 var repo string
 
 var rootCmd = &cobra.Command{
-	Use:   "gh-branch-auditor",
-	Short: "A tool to audit GitHub branch protection rules",
-	Long:  `gh-branch-auditor is a tool to audit GitHub branch protection rules.`,
+	Use:   "gh-ba",
+	Short: "A tool to audit GitHub Branch Protection Rules",
+	Long:  `gh-ba is a tool to audit GitHub Branch Protection Rules.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		if repo != "" {
@@ -39,6 +39,8 @@ var rootCmd = &cobra.Command{
 		}
 
 		return nil
+
+		// TBD
 
 		// reports, err := ruler.NewRuleset().Run(pid, mpoint)
 		// if err != nil {
