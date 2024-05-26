@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -11,6 +12,7 @@ import (
 var debug bool
 var token string
 var owner string
+var repo string
 
 var rootCmd = &cobra.Command{
 	Use:   "gh-branch-auditor",
@@ -18,12 +20,23 @@ var rootCmd = &cobra.Command{
 	Long:  `gh-branch-auditor is a tool to audit GitHub branch protection rules.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		bps, err := branchprotections.GetBranchProtections(owner, token)
-		if err != nil {
-			return err
-		}
+		if repo != "" {
+			bpr, err := branchprotections.GetBranchProtection(owner, token, repo)
+			if err != nil {
+				return err
+			}
+			protection, _ := json.Marshal(bpr)
 
-		fmt.Println(bps)
+			fmt.Println(string(protection))
+		} else {
+			bpr, err := branchprotections.GetBranchProtections(owner, token)
+			if err != nil {
+				return err
+			}
+			protection, _ := json.Marshal(bpr)
+
+			fmt.Println(string(protection))
+		}
 
 		return nil
 
@@ -56,4 +69,7 @@ func init() {
 	rootCmd.PersistentFlags().BoolVar(&debug, "debug", false, "turn on debug logs")
 	rootCmd.PersistentFlags().StringVarP(&token, "token", "t", "", "Set GitHub token")
 	rootCmd.PersistentFlags().StringVarP(&owner, "owner", "o", "", "Set GitHub repository owner")
+	rootCmd.PersistentFlags().StringVarP(&repo, "repo", "r", "", "Set GitHub repository name")
+	rootCmd.MarkPersistentFlagRequired("token")
+	rootCmd.MarkPersistentFlagRequired("owner")
 }
