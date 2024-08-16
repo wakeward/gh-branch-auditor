@@ -1,18 +1,22 @@
 package cmd
 
 import (
-	"encoding/json"
+	"bytes"
 	"fmt"
 	"os"
 
+	"github.com/cli/go-gh/pkg/auth"
 	"github.com/spf13/cobra"
 	"github.com/wakeward/gh-branch-auditor/pkg/branchprotections"
+	"github.com/wakeward/gh-branch-auditor/pkg/eval"
+	"github.com/wakeward/gh-branch-auditor/pkg/output"
 )
 
 var debug bool
 var token string
 var owner string
 var repo string
+var format string
 
 var rootCmd = &cobra.Command{
 	Use:   "gh-branch-auditor",
@@ -20,43 +24,31 @@ var rootCmd = &cobra.Command{
 	Long:  `gh-branch-auditor is a tool to audit GitHub Branch Protection Rules.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		if repo != "" {
-			bpr, err := branchprotections.GetBranchProtection(owner, token, repo)
-			if err != nil {
-				return err
-			}
-			protection, _ := json.Marshal(bpr)
-
-			fmt.Println(string(protection))
-		} else {
-			bpr, err := branchprotections.GetBranchProtections(owner, token)
-			if err != nil {
-				return err
-			}
-			protection, _ := json.Marshal(bpr)
-
-			fmt.Println(string(protection))
+		if token == "" {
+			t, _ := auth.TokenForHost("github.com")
+			token = t
 		}
 
+		bpr, err := branchprotections.GetBranchProtections(owner, token, repo)
+		if err != nil {
+			return err
+		}
+
+		reports, err := eval.NewRuleset().Run(bpr)
+		if err != nil {
+			return err
+		}
+
+		var buff bytes.Buffer
+		err = output.WriteReports(format, &buff, reports)
+		if err != nil {
+			return err
+		}
+
+		out := buff.String()
+		fmt.Println(out)
+
 		return nil
-
-		// TBD
-
-		// reports, err := ruler.NewRuleset().Run(pid, mpoint)
-		// if err != nil {
-		// 	return err
-		// }
-
-		// var buff bytes.Buffer
-		// err = output.WriteReports(format, &buff, reports)
-		// if err != nil {
-		// 	return err
-		// }
-
-		// out := buff.String()
-		// fmt.Println(out)
-
-		// return nil
 	},
 }
 
@@ -72,6 +64,6 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&token, "token", "t", "", "Set GitHub token")
 	rootCmd.PersistentFlags().StringVarP(&owner, "owner", "o", "", "Set GitHub repository owner")
 	rootCmd.PersistentFlags().StringVarP(&repo, "repo", "r", "", "Set GitHub repository name")
-	rootCmd.MarkPersistentFlagRequired("token")
+	rootCmd.PersistentFlags().StringVarP(&format, "format", "f", "cli", "Set output format (cli, json)")
 	rootCmd.MarkPersistentFlagRequired("owner")
 }

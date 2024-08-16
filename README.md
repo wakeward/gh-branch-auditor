@@ -11,12 +11,14 @@ A tool for analysing GitHub Branch Protection settings on repositories
 ## Command Line Usage
 
 ```bash
+gh-branch-auditor is a tool to audit GitHub Branch Protection Rules.
+
 Usage:
   gh-branch-auditor [flags]
 
 Flags:
       --debug          turn on debug logs
-  -h, --help           help for gh-ba
+  -h, --help           help for gh-branch-auditor
   -o, --owner string   Set GitHub repository owner
   -r, --repo string    Set GitHub repository name
   -t, --token string   Set GitHub token
