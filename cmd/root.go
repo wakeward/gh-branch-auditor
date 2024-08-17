@@ -64,6 +64,6 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&token, "token", "t", "", "Set GitHub token")
 	rootCmd.PersistentFlags().StringVarP(&owner, "owner", "o", "", "Set GitHub repository owner")
 	rootCmd.PersistentFlags().StringVarP(&repo, "repo", "r", "", "Set GitHub repository name")
-	rootCmd.PersistentFlags().StringVarP(&format, "format", "f", "cli", "Set output format (cli, json)")
+	rootCmd.PersistentFlags().StringVarP(&format, "format", "f", "json", "Set output format (cli, json)")
 	rootCmd.MarkPersistentFlagRequired("owner")
 }

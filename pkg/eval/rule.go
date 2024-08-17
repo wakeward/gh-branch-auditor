@@ -1,6 +1,8 @@
 package eval
 
-import "github.com/wakeward/gh-branch-auditor/pkg/branchprotections"
+import (
+	"github.com/wakeward/gh-branch-auditor/pkg/branchprotections"
+)
 
 type Rule struct {
 	ID        string

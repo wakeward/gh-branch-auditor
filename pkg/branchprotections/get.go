@@ -75,6 +75,9 @@ func GetBranchProtections(owner string, token string, repoName string) (rbp []*R
 				IsProtected: *branch.Protected,
 			}
 
+			raw_output, _ := json.Marshal(repoList)
+			fmt.Println(string(raw_output))
+
 			allRepos = append(allRepos, repoList)
 		}
 
