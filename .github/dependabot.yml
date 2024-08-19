@@ -1,0 +1,27 @@
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "08:00"
+      timezone: "Europe/London"
+    open-pull-requests-limit: 10
+    allow:
+    - dependencytype: "all"
+    commit-message:
+      prefix: chore
+        include: scope
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "08:00"
+      timezone: "Europe/London"
+    allow:
+    - dependencytype: "all"
+    commit-message:
+      prefix: chore
+        include: scope
