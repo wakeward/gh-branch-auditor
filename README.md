@@ -22,11 +22,12 @@ Usage:
   gh-branch-auditor [flags]
 
 Flags:
-      --debug          turn on debug logs
-  -h, --help           help for gh-branch-auditor
-  -o, --owner string   Set GitHub repository owner
-  -r, --repo string    Set GitHub repository name
-  -t, --token string   Set GitHub token
+      --debug           turn on debug logs
+  -f, --format string   Set output format (cli, json) (default "json")
+  -h, --help            help for gh-branch-auditor
+  -o, --owner string    Set GitHub repository owner
+  -r, --repo string     Set GitHub repository name
+  -t, --token string    Set GitHub token
 ```
 
 ## Usage Example
