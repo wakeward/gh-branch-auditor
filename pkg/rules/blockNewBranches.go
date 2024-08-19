@@ -7,7 +7,7 @@ import (
 func BlockNewBranches(input *branchprotections.RepoBranchProtection) int {
 	protectionRule := 0
 
-	if input.Protection.BlockCreations.GetEnabled() {
+	if !input.Protection.BlockCreations.GetEnabled() {
 		protectionRule++
 	}
 
