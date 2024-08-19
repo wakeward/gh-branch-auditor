@@ -76,3 +76,4 @@ The current limitations for the tool are as follows:
 
 * Analysis is limited to GitHub SaaS (github.com)
 * The assessment is only against the default branch (where primarily branch protection rules are enforced)
+* Currently only json output is supported
