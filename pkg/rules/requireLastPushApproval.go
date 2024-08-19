@@ -4,10 +4,10 @@ import (
 	"github.com/wakeward/gh-branch-auditor/pkg/branchprotections"
 )
 
-func AllowForcePushes(input *branchprotections.RepoBranchProtection) int {
+func RequireLastPushApproval(input *branchprotections.RepoBranchProtection) int {
 	protectionRule := 0
 
-	if input.Protection.AllowForcePushes.Enabled {
+	if !input.Protection.RequiredPullRequestReviews.RequireLastPushApproval {
 		protectionRule++
 	}
 

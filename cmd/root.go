@@ -34,7 +34,7 @@ var rootCmd = &cobra.Command{
 			return err
 		}
 
-		reports, err := eval.NewRuleset().Run(bpr)
+		reports, err := IsProtected(bpr)
 		if err != nil {
 			return err
 		}
@@ -66,4 +66,21 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&repo, "repo", "r", "", "Set GitHub repository name")
 	rootCmd.PersistentFlags().StringVarP(&format, "format", "f", "json", "Set output format (cli, json)")
 	rootCmd.MarkPersistentFlagRequired("owner")
+}
+
+func IsProtected(bpr []*branchprotections.RepoBranchProtection) (reports eval.Reports, err error) {
+	for _, repo := range bpr {
+		if repo.IsProtected {
+			reports, err = eval.ProtectedRuleset().Run(bpr)
+			if err != nil {
+				return reports, err
+			}
+		} else if !repo.IsProtected {
+			reports, err = eval.UnprotectedRuleset().Run(bpr)
+			if err != nil {
+				return reports, err
+			}
+		}
+	}
+	return reports, nil
 }

@@ -1,7 +1,5 @@
 package eval
 
-import "github.com/wakeward/gh-branch-auditor/pkg/branchprotections"
-
 type Reports struct {
 	Title  string   `json:"title"`
 	Verson string   `json:"version"`
@@ -16,8 +14,9 @@ type Report struct {
 }
 
 type RuleRef struct {
-	ID              string                                    `json:"id"`
-	Reason          string                                    `json:"reason"`
-	Risk            string                                    `json:"risk"`
-	ProtectionRules []*branchprotections.RepoBranchProtection `json:"-"`
+	ID              string `json:"id"`
+	Rule            string `json:"rule"`
+	Risk            string `json:"risk"`
+	Severity        string `json:"severity"`
+	ProtectionRules int    `json:"-"`
 }
