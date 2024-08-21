@@ -143,7 +143,7 @@ func UnprotectedRuleset() *Ruleset {
 func (rs *Ruleset) Run(bpr []*branchprotections.RepoBranchProtection) (Reports, error) {
 	reports := Reports{
 		Title:  "GitHub Branch Auditor",
-		Verson: "0.1",
+		Verson: "v1.0.0",
 		Date:   time.Now().Format("2006-01-02T15:04:05"),
 		Report: make([]Report, 0),
 	}
