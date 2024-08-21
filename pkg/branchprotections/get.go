@@ -2,7 +2,6 @@ package branchprotections
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"github.com/google/go-github/v62/github"
@@ -51,9 +50,11 @@ func GetBranchProtections(owner string, token string, repoName string) (rbp []*R
 		}
 
 		if *branch.Protected {
-			bpr, _, err := client.Repositories.GetBranchProtection(context.Background(), owner, *repo.Name, *repo.DefaultBranch)
-			if err != nil {
+			bpr, res, err := client.Repositories.GetBranchProtection(context.Background(), owner, *repo.Name, *repo.DefaultBranch)
+			if err != nil && res.StatusCode != 404 {
 				return nil, fmt.Errorf("error getting branch protection: %w", err)
+			} else if res.StatusCode == 404 {
+				return nil, fmt.Errorf("branch protection request returned 404, user may not have administrator read permissions on the repository")
 			}
 
 			repoList := &RepoBranchProtection{
@@ -63,9 +64,6 @@ func GetBranchProtections(owner string, token string, repoName string) (rbp []*R
 				Protection:  *bpr,
 			}
 
-			raw_output, _ := json.Marshal(repoList)
-			fmt.Println(string(raw_output))
-
 			allRepos = append(allRepos, repoList)
 
 		} else {
@@ -74,9 +72,6 @@ func GetBranchProtections(owner string, token string, repoName string) (rbp []*R
 				Branch:      *repo.DefaultBranch,
 				IsProtected: *branch.Protected,
 			}
-
-			raw_output, _ := json.Marshal(repoList)
-			fmt.Println(string(raw_output))
 
 			allRepos = append(allRepos, repoList)
 		}
