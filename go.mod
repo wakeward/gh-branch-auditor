@@ -1,6 +1,6 @@
 module github.com/wakeward/gh-branch-auditor
 
-go 1.21.5
+go 1.23.0
 
 require (
 	github.com/cli/go-gh v1.2.1
