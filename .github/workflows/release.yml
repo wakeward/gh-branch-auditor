@@ -8,7 +8,10 @@ permissions:
 
 jobs:
   release:
+    name: Release GH Extension
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: cli/gh-extension-precompile@v1
+        with:
+           go-version-file: go.mod
