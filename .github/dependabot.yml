@@ -1,27 +1,35 @@
+---
 version: 2
 updates:
-  - package-ecosystem: "gomod"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "weekly"
+      interval: weekly
       day: "friday"
       time: "08:00"
-      timezone: "Europe/London"
+      timezone: Etc/UTC
     open-pull-requests-limit: 10
-    allow:
-    - dependencytype: "all"
     commit-message:
       prefix: chore
-        include: scope
-  - package-ecosystem: "github-actions"
-    directory: "/"
+      include: scope
+    groups:
+      gha:
+        patterns:
+          - "*"
+  - package-ecosystem: gomod
+    directory: /
     schedule:
-      interval: "weekly"
+      interval: weekly
       day: "friday"
       time: "08:00"
-      timezone: "Europe/London"
+      timezone: Etc/UTC
     allow:
-    - dependencytype: "all"
+      # direct and indirect updates
+      - dependency-type: "all"
     commit-message:
       prefix: chore
-        include: scope
+      include: scope
+    groups:
+      gomod:
+        patterns:
+          - "*"
