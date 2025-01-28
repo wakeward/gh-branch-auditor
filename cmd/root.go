@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cli/go-gh/pkg/auth"
+	"github.com/cli/go-gh/v2/pkg/auth"
 	"github.com/spf13/cobra"
 	"github.com/wakeward/gh-branch-auditor/pkg/branchprotections"
 	"github.com/wakeward/gh-branch-auditor/pkg/eval"
