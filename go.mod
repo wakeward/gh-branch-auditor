@@ -1,10 +1,11 @@
 module github.com/wakeward/gh-branch-auditor
 
 go 1.23.1
+
 toolchain go1.24.1
 
 require (
-	github.com/cli/go-gh/v2 v2.12.0
+	github.com/cli/go-gh/v2 v2.12.1
 	github.com/google/go-github/v62 v62.0.0
 	github.com/spf13/cobra v1.9.1
 )
