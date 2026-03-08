@@ -118,6 +118,15 @@ func ProtectedRuleset() *Ruleset {
 
 	list = append(list, strictStatusChecks)
 
+	enforceAdmins := Rule{
+		Predicate: rules.EnforceAdmins,
+		ID:        "GH-BP-013",
+		Rule:      "Do not allow bypassing the above settings",
+		Risk:      "Administrators can bypass branch protection settings",
+		Severity:  "High",
+	}
+	list = append(list, enforceAdmins)
+
 	return &Ruleset{
 		Rules: list,
 	}
