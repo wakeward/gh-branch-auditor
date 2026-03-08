@@ -39,6 +39,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COSIGN_EXPERIMENTAL: "true"
 
+      - name: Scan release artifacts
+        uses: anchore/scan-action@3343887d815d7b07465f6fdcd395bd66508d486a # v3
+        with:
+          path: "dist"
+          fail-build: true
+          severity-cutoff: critical
+
       - name: Generate subject for provenance
         id: hash
         run: |

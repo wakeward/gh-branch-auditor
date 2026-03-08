@@ -1,5 +1,10 @@
 # GitHub Branch Protection Auditor (gh-branch-auditor)
 
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/wakeward/gh-branch-auditor/badge)](https://securityscorecards.dev/viewer/?uri=github.com/wakeward/gh-branch-auditor)
+[![Go Report Card](https://goreportcard.com/badge/github.com/wakeward/gh-branch-auditor)](https://goreportcard.com/report/github.com/wakeward/gh-branch-auditor)
+[![Release](https://img.shields.io/github/v/release/wakeward/gh-branch-auditor)](https://github.com/wakeward/gh-branch-auditor/releases)
+[![License](https://img.shields.io/github/license/wakeward/gh-branch-auditor)](LICENSE)
+
 A tool for analysing GitHub Branch Protection settings on repositories
 
 > Currently limited to the default branch where primarily branch protection rules are enforced.
@@ -68,6 +73,7 @@ The following rulesets are analysed by the gh-branch-auditor.
 | GH-BP-010 | Require status checks to pass before merging | Branches do not need to up to date before merging. | Medium |
 | GH-BP-011 | Lock branch | Push directly to branch is allowed for collaborators and teams. | High |
 | GH-BP-012 | Require signed commits | Not all commits are not signed | Low |
+| GH-BP-013 | Do not allow bypassing the above settings | Administrators can bypass branch protection settings. | High |
 
 > Note: There are no risks that are considered critical as user must be authenticated as collaborator or team to push to the repository.
 
