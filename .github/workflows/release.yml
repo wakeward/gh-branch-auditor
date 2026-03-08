@@ -3,15 +3,68 @@ on:
   push:
     tags:
       - "v*"
+
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  release:
-    name: Release GH Extension
+  goreleaser:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # to create release
+      id-token: write # for keyless signing
+    outputs:
+      hashes: ${{ steps.hash.outputs.hashes }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: cli/gh-extension-precompile@v2
+      - name: Harden Runner
+        uses: step-security/harden-runner@58077d3c7e43986b6b15fba718e8ea69e387dfcc # v2
         with:
-            go_version_file: go.mod
+          egress-policy: audit
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417 # v6
+        with:
+          go-version-file: 'go.mod'
+
+      - uses: sigstore/cosign-installer@053f9b74638557590800a301da1ba82351507e2c # v3.8.1
+
+      - uses: anchore/sbom-action/download-syft@df80a981bc6edbc4e220a492d3cbe9f5547a6e75 # v0.17.9
+
+      - name: Run GoReleaser
+        id: goreleaser
+        uses: goreleaser/goreleaser-action@9ed2f89a662bf1735a48bc8557fd212fa902bebf # v6.1.0
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COSIGN_EXPERIMENTAL: "true"
+
+      - name: Scan release artifacts
+        uses: anchore/scan-action@3343887d815d7b07465f6fdcd395bd66508d486a # v3
+        with:
+          path: "dist"
+          fail-build: true
+          severity-cutoff: critical
+
+      - name: Generate subject for provenance
+        id: hash
+        run: |
+          set -euo pipefail
+          files=$(cat dist/checksums.txt | base64 -w0)
+          echo "hashes=$files" >> "$GITHUB_OUTPUT"
+
+  provenance:
+    needs: [goreleaser]
+    permissions:
+      actions: read # to read workflow
+      id-token: write # to sign provenance
+      contents: write # to upload provenance to release
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@5a775b367a56d5bd118a224a811bba288150a563 # v2.0.0
+    with:
+      base64-subjects: "${{ needs.goreleaser.outputs.hashes }}"
+      upload-assets: true # Upload provenance to release

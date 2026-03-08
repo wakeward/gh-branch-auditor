@@ -1,0 +1,56 @@
+version: 2
+
+project_name: gh-branch-auditor
+
+builds:
+  - id: extension
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    binary: gh-branch-auditor
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
+
+archives:
+  - id: extension
+    builds:
+      - extension
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+
+sboms:
+  - artifacts: archive
+    documents:
+      - spdx
+  - id: source
+    artifacts: source
+    documents:
+      - spdx
+
+signs:
+  - cmd: cosign
+    args:
+      - "sign-blob"
+      - "--yes" # Keyless signing
+      - "--output-signature"
+      - "${signature}"
+      - "${artifact}"
+    artifacts: checksum
+
+release:
+  github:
+    owner: wakeward
+    name: gh-branch-auditor
+  draft: false
+  prerelease: auto
