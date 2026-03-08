@@ -30,13 +30,14 @@ checksum:
   name_template: 'checksums.txt'
 
 sboms:
-  - artifacts: archive
+  - id: archive
+    artifacts: archive
     documents:
-      - spdx
+      - "{{ .ArtifactName }}.spdx.json"
   - id: source
     artifacts: source
     documents:
-      - spdx
+      - "{{ .ArtifactName }}.spdx.json"
 
 signs:
   - cmd: cosign
