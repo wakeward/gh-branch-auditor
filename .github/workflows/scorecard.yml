@@ -5,6 +5,8 @@ on:
     - cron: '30 1 * * 5'
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 permissions: read-all
 
