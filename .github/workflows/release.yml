@@ -29,9 +29,9 @@ jobs:
         with:
           go-version-file: 'go.mod'
 
-      - uses: sigstore/cosign-installer@ba7bc0a3fef59531c69a25acd34668d6d3fe6f22 # v4.1.0
+      - uses: sigstore/cosign-installer@cad07c2e89fa2edd6e2d7bab4c1aa38e53f76003 # v4.1.1
 
-      - uses: anchore/sbom-action/download-syft@57aae528053a48a3f6235f2d9461b05fbcb7366d # v0.23.1
+      - uses: anchore/sbom-action/download-syft@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
 
       - name: Run GoReleaser
         id: goreleaser
@@ -45,7 +45,7 @@ jobs:
           COSIGN_EXPERIMENTAL: "true"
 
       - name: Scan release artifacts
-        uses: anchore/scan-action@7037fa011853d5a11690026fb85feee79f4c946c # v7.3.2
+        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
         with:
           path: "dist"
           fail-build: true
