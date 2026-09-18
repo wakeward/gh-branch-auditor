@@ -3,7 +3,7 @@ module github.com/wakeward/gh-branch-auditor
 go 1.26.0
 
 require (
-	github.com/cli/go-gh/v2 v2.16.0
+	github.com/cli/go-gh/v2 v2.16.1
 	github.com/google/go-github/v62 v62.0.0
 	github.com/spf13/cobra v1.10.2
 )
