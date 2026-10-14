@@ -41,12 +41,13 @@ sboms:
 
 signs:
   - cmd: cosign
+    # Cosign v3 writes one Sigstore bundle. --output-signature is ignored.
+    signature: "${artifact}.sigstore.json"
     args:
       - "sign-blob"
-      - "--yes" # Keyless signing
-      - "--output-signature"
-      - "${signature}"
+      - "--bundle=${signature}"
       - "${artifact}"
+      - "--yes" # Keyless signing
     artifacts: checksum
 
 release:
